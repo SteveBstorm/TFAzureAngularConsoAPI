@@ -1,0 +1,4 @@
+<a routerLink="list">Liste des films</a> |
+<a routerLink="login" *ngIf="!isConnected">Connexion</a> |
+<button (click)="logout()" *ngIf="isConnected">Déconnexion</button>
+<a routerLink="userlist" *ngIf="isConnected">Liste d'utilisateur</a>

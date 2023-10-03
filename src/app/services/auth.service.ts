@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/env';
 
 @Injectable({
@@ -7,6 +8,16 @@ import { environment } from 'src/env';
 })
 export class AuthService {
   private url : string = environment.apiurl
+
+  get isConnected() : boolean {
+    return localStorage.getItem("token") != undefined
+  }
+
+  isConnectedSubject : Subject<boolean> = new Subject<boolean>()
+
+  emitConnectionSuject() {
+    this.isConnectedSubject.next(this.isConnected)
+  }
 
   constructor(
     private client : HttpClient
@@ -20,15 +31,24 @@ export class AuthService {
         next : (token) => {
           console.log(token)
           localStorage.setItem("token", token)
+          this.emitConnectionSuject()
+
         }
       })
   }
 
-  getUserList() {
-    let myHeader = new HttpHeaders({
-      'authorization' : 'bearer ' + "token a récupérer dans le localstorage"
-     })
+  logout() {
+    localStorage.clear()
+    this.emitConnectionSuject()
+  }
 
-     this.client.get(this.url + "user", {headers : myHeader})
+  getUserList() : Observable<any> {
+    // let myHeader = new HttpHeaders({
+    //   'authorization' : 'bearer ' + localStorage.getItem("token")
+    //  })
+    // remplacé par TokenInterceptor
+    return this.client.get<any>(this.url + "user"
+      //  {headers : myHeader}
+      )
   }
 }
