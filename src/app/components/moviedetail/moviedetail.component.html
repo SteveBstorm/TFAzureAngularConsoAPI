@@ -1,0 +1,16 @@
+<div *ngIf="currentMovie">
+  <h3>{{currentMovie.title}}</h3>
+  <p>Genre : {{currentMovie.idGenre}} - {{currentMovie.genre?.label}}</p>
+  <p>Realisateur : {{currentMovie.idRealisator}} -
+    {{currentMovie.realisator?.firstname}} {{currentMovie.realisator?.lastname}}
+  </p>
+  <p>Scenariste : {{currentMovie.idScenarist}} -
+    {{currentMovie.scenarist?.firstname}} {{currentMovie.scenarist?.lastname}}
+  </p>
+  <p>Synopsis : {{currentMovie.synopsis}}</p>
+  <p><img [src]="currentMovie.urlPoster" height="200px"></p>
+  <p>
+    <iframe width="560" height="315" [src]="currentMovie.urlTrailer" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+
+  </p>
+</div>

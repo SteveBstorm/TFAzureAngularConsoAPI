@@ -1,0 +1,7 @@
+<h1>Liste de films</h1>
+
+<ul>
+  <li *ngFor="let m of movieList">
+    <a [routerLink]="['../detail', m.id]">{{m.title}}</a>
+  </li>
+</ul>
