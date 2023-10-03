@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env';
 
@@ -22,5 +22,13 @@ export class AuthService {
           localStorage.setItem("token", token)
         }
       })
+  }
+
+  getUserList() {
+    let myHeader = new HttpHeaders({
+      'authorization' : 'bearer ' + "token a récupérer dans le localstorage"
+     })
+
+     this.client.get(this.url + "user", {headers : myHeader})
   }
 }
